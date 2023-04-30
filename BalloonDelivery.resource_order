@@ -25,6 +25,7 @@
   "ResourceOrderSettings": [
     {"name":"objTitleControl","order":1,"path":"objects/objTitleControl/objTitleControl.yy",},
     {"name":"GMLive_program","order":3,"path":"scripts/GMLive_program/GMLive_program.yy",},
+    {"name":"objPlayfield","order":4,"path":"objects/objPlayfield/objPlayfield.yy",},
     {"name":"obj_gmlive","order":3,"path":"objects/obj_gmlive/obj_gmlive.yy",},
     {"name":"GMLive_roomLoader","order":2,"path":"scripts/GMLive_roomLoader/GMLive_roomLoader.yy",},
     {"name":"GMLive_seekEval","order":5,"path":"scripts/GMLive_seekEval/GMLive_seekEval.yy",},
@@ -46,6 +47,7 @@
     {"name":"objMainControl","order":2,"path":"objects/objMainControl/objMainControl.yy",},
     {"name":"roomMain","order":2,"path":"rooms/roomMain/roomMain.yy",},
     {"name":"objBalloon","order":3,"path":"objects/objBalloon/objBalloon.yy",},
+    {"name":"PlayfieldScripts","order":1,"path":"scripts/PlayfieldScripts/PlayfieldScripts.yy",},
     {"name":"GMLive_nodeTools","order":3,"path":"scripts/GMLive_nodeTools/GMLive_nodeTools.yy",},
     {"name":"GMLive_thread","order":4,"path":"scripts/GMLive_thread/GMLive_thread.yy",},
     {"name":"GMLive_vm","order":5,"path":"scripts/GMLive_vm/GMLive_vm.yy",},

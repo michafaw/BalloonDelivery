@@ -5,7 +5,8 @@ if (live_call()) return live_result;
 
 MFLog("Initializing Game");
 
-
+global.numPlayers = 1;
+global.playerScore = [0, 0];
 
 
 
