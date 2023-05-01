@@ -30,3 +30,23 @@ if (shouldDrawDebugLines) {
 	}
 
 }
+
+// Draw Debug Fans
+
+var fanWidth = 50;
+var fanColor = c_dkgray;
+
+// Left Side
+var fanLeftX = origin[0] - fanWidth;
+draw_rectangle_color(fanLeftX, origin[1], fanLeftX+fanWidth, origin[1] + cellSize[1]*numRows, fanColor, fanColor, fanColor, fanColor, false);
+
+var fanRightX = origin[0] + cellSize[0]*numColumns;
+draw_rectangle_color(fanRightX, origin[1], fanRightX+fanWidth, origin[1] + cellSize[1]*numRows, fanColor, fanColor, fanColor, fanColor, false);
+
+
+// TODO - Recenter entire playfield, adjust balloon image to 70x100
+
+
+
+
+

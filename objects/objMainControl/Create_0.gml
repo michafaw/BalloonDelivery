@@ -5,10 +5,10 @@ if (live_call()) return live_result;
 
 MFLog("Entering Main Screen");
 
-
-var playfieldX1 = 312;
-var playfieldX2A = 56;
-var playfieldX2B = 568;
+var playfieldWidth = 350;
+var playfieldX1 = 512 - playfieldWidth/2;
+var playfieldX2A = 1024/4 - playfieldWidth/2;
+var playfieldX2B = 1024*3/4 - playfieldWidth/2;
 var playfieldY = 50;
 
 var playfields;

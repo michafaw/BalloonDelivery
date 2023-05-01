@@ -12,11 +12,9 @@ origin = [10, 10]; // This should be overridden on creation
 numColumns = 5;
 numRows = 4;
 
-cellSize = [80, 100];
+cellSize = [70, 100];
 
 numInitialBalloons = 8
-
-
 
 
 
