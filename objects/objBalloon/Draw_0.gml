@@ -5,11 +5,13 @@ if (live_call()) return live_result;
 
 
 if (isMovingUp) {
-	draw_self();
 	bounceFrame = 0;
-} else {
+}
 
-	var giftOffset = [22,67]; // 52,96 -> 30x30
+// Draw the balloon & gift box
+{
+
+	var giftOffset = [22,67];
 	
 	var index = floor(bounceFrame);
 	//MFLog("bounceFrame = " + string(bounceFrame) + ", index = " + string(index));
@@ -19,12 +21,14 @@ if (isMovingUp) {
 	draw_sprite(sprGiftAttached, 0, x + giftOffset[0] + offsetXY[0], y + giftOffset[1] + offsetXY[1]);
 	
 
-	bounceFrame += bounceFrameSpeed;
-	if (bounceFrame >= bounceFrameCount) {
-		bounceFrame -= bounceFrameCount;
-		if (bounceFrame <= 0) {
-			bounceFrame = 0.0;	
+	if (!isMovingUp) {
+		// Increase the frame counter
+		bounceFrame += bounceFrameSpeed;
+		if (bounceFrame >= bounceFrameCount) {
+			bounceFrame -= bounceFrameCount;
+			if (bounceFrame <= 0) {
+				bounceFrame = 0.0;	
+			}
 		}
 	}
-
 }
