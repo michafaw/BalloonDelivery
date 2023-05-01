@@ -9,12 +9,15 @@ if (isMovingUp) {
 	bounceFrame = 0;
 } else {
 
+	var giftOffset = [22,67]; // 52,96 -> 30x30
 	
 	var index = floor(bounceFrame);
 	//MFLog("bounceFrame = " + string(bounceFrame) + ", index = " + string(index));
 	var offsetXY = [0, bounceOffsetsY[index]];
 
 	draw_sprite(sprite_index, image_index, x + offsetXY[0], y + offsetXY[1]);
+	draw_sprite(sprGiftAttached, 0, x + giftOffset[0] + offsetXY[0], y + giftOffset[1] + offsetXY[1]);
+	
 
 	bounceFrame += bounceFrameSpeed;
 	if (bounceFrame >= bounceFrameCount) {

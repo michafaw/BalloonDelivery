@@ -24,6 +24,25 @@ function isCellEmpty(playfieldInst) {
 function runInitialSetupForPlayfield(playfieldInst) {
 	if (live_call(argument0)) return live_result;
 	
+	// Left Fans
+	var originX = playfieldInst.origin[0] - playfieldInst.fanOffset[0];
+	for (var i = 0; i < playfieldInst.numRows; i++) {
+		var originY = playfieldInst.origin[1] + cellSize[1]*i + playfieldInst.fanOffset[1];
+		var fan = instance_create_layer(originX, originY, "Playfield", objFan);
+		fan.myPlayfield = playfieldInst;
+		fan.myDirection = "right";
+	}
+	// Right Fans
+	originX = playfieldInst.origin[0] + playfieldInst.numColumns*playfieldInst.cellSize[0] + playfieldInst.fanOffset[0];
+	for (var i = 0; i < playfieldInst.numRows; i++) {
+		var originY = playfieldInst.origin[1] + cellSize[1]*i + playfieldInst.fanOffset[1];
+		var fan = instance_create_layer(originX, originY, "Playfield", objFan);
+		fan.myPlayfield = playfieldInst;
+		fan.myDirection = "left";
+	}
+	
+	
+	// Balloons
 	var initialBalloonLayout = [[0,0], [1,0], [2,0], [4,0], [1,1], [2,1], [4,1], [1,2] ];
 	for (var i = 0; i < array_length(initialBalloonLayout); i++) {
 		var originXY = cellOriginXY(playfieldInst, initialBalloonLayout[i]);

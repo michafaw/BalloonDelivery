@@ -13,8 +13,9 @@ numColumns = 5;
 numRows = 4;
 
 cellSize = [70, 100];
-
-numInitialBalloons = 8
+numInitialBalloons = 8;
+fanWidth = 50;
+fanOffset = [25+0,50+10]; //[25,50] is the distance to the origin
 
 
 

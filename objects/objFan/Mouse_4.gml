@@ -3,11 +3,10 @@
 // if (live_call(argument0, argument1)) return live_result; // For 2 arg scripts
 if (live_call()) return live_result;
 
-MFLog("Balloon tapped");
+MFLog("Fan tapped");
 
 
-// Create falling present where box was before
+// Move balloons in this row
 // Micha TODO
 
 
-instance_destroy();

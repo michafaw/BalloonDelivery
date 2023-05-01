@@ -33,8 +33,7 @@ if (shouldDrawDebugLines) {
 
 // Draw Debug Fans
 
-var fanWidth = 50;
-var fanColor = c_dkgray;
+var fanColor = c_maroon;
 
 // Left Side
 var fanLeftX = origin[0] - fanWidth;
