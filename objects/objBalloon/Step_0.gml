@@ -11,40 +11,6 @@ if (keyboard_check_pressed(vk_right)) {
 }
 
 
-var liftEnabled = true; // Balloon lift is disabled here -- Micha TODO
-if (!isMovingUp && liftEnabled) {
-	if (canBalloonMoveUp(self)) {
-		isMovingUp = true;
-		destinationPosition = [myPosition[0], myPosition[1]-1];
-		// Set the new position as my own position so I can still be hit by fans/lift
-		myPosition = destinationPosition;
-	}
-}
-
-if (isMovingUp) {
-	var hasReachedDestinationHeight = false;
-	var destinationOrigin = cellOriginXY(myPlayfield, destinationPosition);
-	if (y <= destinationOrigin[1]) {
-		hasReachedDestinationHeight = true;
-	}
-	
-	if (hasReachedDestinationHeight) {
-		myPosition = destinationPosition;
-		destinationPosition = noone;
-		isMovingUp = false;
-		upwardSpeed = 0;
-	} else {
-		// Doublecheck there isn't a balloon in that spot already somehow
-		//if (!canBalloonMoveUp(self)) {
-			
-		//}
-		
-		// Move it upward
-		upwardSpeed -= 1;
-		y += upwardSpeed;
-	}
-}
-
 if (!isMovingLeft && !isMovingRight) {
 	if (shouldTryToAdjustPositionBy > 0) {
 		isMovingRight = true;
@@ -107,6 +73,41 @@ if (isMovingLeft) {
 			// Move it left
 			x += -sidewaysBaseSpeed;
 		}
+	}
+}
+
+// Upward Movement (Lift)
+var liftEnabled = true; // Balloon lift is disabled here -- Micha TODO
+if (!isMovingUp && liftEnabled) {
+	if (canBalloonMoveUp(self)) {
+		isMovingUp = true;
+		destinationPosition = [myPosition[0], myPosition[1]-1];
+		// Set the new position as my own position so I can still be hit by fans/lift
+		myPosition = destinationPosition;
+	}
+}
+
+if (isMovingUp) {
+	var hasReachedDestinationHeight = false;
+	var destinationOrigin = cellOriginXY(myPlayfield, destinationPosition);
+	if (y <= destinationOrigin[1]) {
+		hasReachedDestinationHeight = true;
+	}
+	
+	if (hasReachedDestinationHeight) {
+		myPosition = destinationPosition;
+		destinationPosition = noone;
+		isMovingUp = false;
+		upwardSpeed = 0;
+	} else {
+		// Doublecheck there isn't a balloon in that spot already somehow
+		//if (!canBalloonMoveUp(self)) {
+			
+		//}
+		
+		// Move it upward
+		upwardSpeed -= 1;
+		y += upwardSpeed;
 	}
 }
 
