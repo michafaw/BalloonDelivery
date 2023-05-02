@@ -15,8 +15,12 @@ bounceFrameCount = array_length(bounceOffsetsY);
 
 myPlayfield = 0;
 isMovingUp = false;
-isMovingSideways = false;
+isMovingSideways = false; // Remove this -- Micha TODO
+isMovingLeft = false;
+isMovingRight = false;
 shouldTryToAdjustPositionBy = 0; // -1 or +1 for left/right
 destinationPosition = noone;
-upwardSpeed = 0;
+upwardSpeed = 0;// Changes based on free space above
+upwardAcceleration = 1;
+sidewaysBaseSpeed = 5;
 myPosition = [0,0]; // Overridden during creation, changes when balloon is halfway into a new cell

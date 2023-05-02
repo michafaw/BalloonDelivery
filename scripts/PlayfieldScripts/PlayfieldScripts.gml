@@ -21,13 +21,6 @@ function isCellEmpty(playfieldInst) {
 	return true;
 }
 
-function canMoveRight(balloonInst) {
-	if (live_call(argument0)) return live_result;
-	
-	
-	return true;
-}
-
 function runInitialSetupForPlayfield(playfieldInst) {
 	if (live_call(argument0)) return live_result;
 	
@@ -52,7 +45,9 @@ function runInitialSetupForPlayfield(playfieldInst) {
 	// Balloons
 	// Defined layouts
 	//var initialBalloonLayout = [[0,0], [1,0], [2,0], [1,1], [2,1], [4,1], [1,3], [4,2], [4,3], [3,3]];
-	var initialBalloonLayout = [[2,1], [1,2], [2,2], [3,2], [0,3], [1,3], [2,3], [3,3], [4,3], ];
+	//var initialBalloonLayout = [[2,1], [1,2], [2,2], [3,2], [0,3], [1,3], [2,3], [3,3], [4,3], ]; // Pyramid
+	var initialBalloonLayout = [[2,2],[2,3],];
+	//var initialBalloonLayout = [[2,3],[3,3],];
 	
 	
 	for (var i = 0; i < array_length(initialBalloonLayout); i++) {
@@ -89,16 +84,25 @@ function canBalloonMoveUp(balloonInst) {
 	if (balloonInst.myPosition[1] == 0)
 		return false;
 		
-	// Find a balloon in the cell above
+	// Find a balloon in the cell above, above+left, above+right
 	with (objBalloon) {
-		if (myPlayfield == other.myPlayfield) {
+		if (myPlayfield == other.myPlayfield && self != other) {
 			if (myPosition[0] == other.myPosition[0] && myPosition[1] == other.myPosition[1]-1) {
-				// This is the balloon right above us
-				if (isMovingUp) {
-					// It's moving up, so we can take its spot
-					return true;
-				} else {
+				// This is the balloon above us
+				if (!isMovingUp) {
 					// It's not moving up, so we're stuck here
+					return false;
+				}
+			} else if (myPosition[0] == other.myPosition[0]-1 && myPosition[1] == other.myPosition[1]-1) {
+				// This is the balloon above us and to the left
+				if (isMovingRight && !isMovingUp) {
+					// It's moving into the spot above us and not moving up, so we're stuck here
+					return false;
+				}
+			} else if (myPosition[0] == other.myPosition[0]+1 && myPosition[1] == other.myPosition[1]-1) {
+				// This is the balloon above us and to the right
+				if (isMovingLeft && !isMovingUp) {
+					// It's moving into the spot above us and not moving up, so we're stuck here
 					return false;
 				}
 			}
