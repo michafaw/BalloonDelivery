@@ -4,10 +4,10 @@
 if (live_call()) return live_result;
 
 MFLog("Balloon tapped");
-
+showDebugMessages = !showDebugMessages;;
 
 // Create falling present where box was before
 // Micha TODO
 
 
-instance_destroy();
+//instance_destroy();

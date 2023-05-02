@@ -5,9 +5,13 @@ if (live_call()) return live_result;
 
 
 if (keyboard_check_pressed(vk_right)) {
-	shouldTryToAdjustPositionBy++;	
+	if (canBalloonMoveRight(self)) {
+		shouldTryToAdjustPositionBy++;
+	}
 } else if (keyboard_check_pressed(vk_left)) {
-	shouldTryToAdjustPositionBy--;	
+	if (canBalloonMoveLeft(self)) {
+		shouldTryToAdjustPositionBy--;
+	}
 }
 
 
@@ -35,6 +39,7 @@ if (isMovingRight) {
 	if (destinationPosition == noone) {
 		// We've halted movement somewhere else so bail out here
 		isMovingRight = false;
+		MFLog("Unexpected: destinationPosition is empty in isMovingRight check"); // DEBUG Micha TODO}
 	} else {
 		var hasReachedDestinationColumn = false;
 		var destinationOrigin = cellOriginXY(myPlayfield, destinationPosition);
@@ -44,6 +49,7 @@ if (isMovingRight) {
 	
 	
 		if (hasReachedDestinationColumn) {
+			if(showDebugMessages) MFLog("isMovingRight - hasReachedDestinationColumn"); // DEBUG Micha TODO
 			myPosition = destinationPosition;
 			destinationPosition = noone;
 			isMovingRight = false;
@@ -58,7 +64,9 @@ if (isMovingLeft) {
 	if (destinationPosition == noone) {
 		// We've halted movement somewhere else so bail out here
 		isMovingLeft = false;
+		MFLog("Unexpected: destinationPosition is empty in isMovingLeft check"); // DEBUG Micha TODO
 	} else {
+		var hasReachedDestinationColumn = false;
 		var destinationOrigin = cellOriginXY(myPlayfield, destinationPosition);
 		if (x <= destinationOrigin[0]) {
 			hasReachedDestinationColumn = true;
@@ -66,6 +74,7 @@ if (isMovingLeft) {
 	
 	
 		if (hasReachedDestinationColumn) {
+			if(showDebugMessages) MFLog("isMovingLeft - hasReachedDestinationColumn"); // DEBUG Micha TODO
 			myPosition = destinationPosition;
 			destinationPosition = noone;
 			isMovingLeft = false;
@@ -80,6 +89,7 @@ if (isMovingLeft) {
 var liftEnabled = true; // Balloon lift is disabled here -- Micha TODO
 if (!isMovingUp && liftEnabled) {
 	if (canBalloonMoveUp(self)) {
+		if(showDebugMessages) MFLog("canBalloonMoveUp: true"); // DEBUG Micha TODO
 		isMovingUp = true;
 		destinationPosition = [myPosition[0], myPosition[1]-1];
 		// Set the new position as my own position so I can still be hit by fans/lift
@@ -88,26 +98,33 @@ if (!isMovingUp && liftEnabled) {
 }
 
 if (isMovingUp) {
-	var hasReachedDestinationHeight = false;
-	var destinationOrigin = cellOriginXY(myPlayfield, destinationPosition);
-	if (y <= destinationOrigin[1]) {
-		hasReachedDestinationHeight = true;
-	}
-	
-	if (hasReachedDestinationHeight) {
-		myPosition = destinationPosition;
-		destinationPosition = noone;
+	if (destinationPosition == noone) {
+		// We've halted movement somewhere else so bail out here
 		isMovingUp = false;
-		upwardSpeed = 0;
+		MFLog("Unexpected: destinationPosition is empty in isMovingUp check"); // DEBUG Micha TODO
 	} else {
-		// Doublecheck there isn't a balloon in that spot already somehow
-		//if (!canBalloonMoveUp(self)) {
+		var hasReachedDestinationHeight = false;
+		var destinationOrigin = cellOriginXY(myPlayfield, destinationPosition);
+		if (y <= destinationOrigin[1]) {
+			hasReachedDestinationHeight = true;
+		}
+	
+		if (hasReachedDestinationHeight) {
+			if(showDebugMessages) MFLog("isMovingUp - hasReachedDestinationHeight"); // DEBUG Micha TODO
+			myPosition = destinationPosition;
+			destinationPosition = noone;
+			isMovingUp = false;
+			upwardSpeed = 0;
+		} else {
+			// Doublecheck there isn't a balloon in that spot already somehow
+			//if (!canBalloonMoveUp(self)) {
 			
-		//}
+			//}
 		
-		// Move it upward
-		upwardSpeed -= 1;
-		y += upwardSpeed;
+			// Move it upward
+			upwardSpeed -= 1;
+			y += upwardSpeed;
+		}
 	}
 }
 

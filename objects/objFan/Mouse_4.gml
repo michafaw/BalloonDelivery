@@ -7,6 +7,10 @@ MFLog("Fan tapped");
 
 
 // Move balloons in this row
-// Micha TODO
+if (myDirection == "right") {
+	moveBalloonsInRowToRight(myPlayfield, myRow);
+} else if (myDirection == "left") {
+	moveBalloonsInRowToLeft(myPlayfield, myRow);
+}
 
 

@@ -24,3 +24,5 @@ upwardSpeed = 0;// Changes based on free space above
 upwardAcceleration = 1;
 sidewaysBaseSpeed = 5;
 myPosition = [0,0]; // Overridden during creation, changes when balloon is halfway into a new cell
+
+showDebugMessages = false;

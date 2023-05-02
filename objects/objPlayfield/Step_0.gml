@@ -7,3 +7,9 @@ if (needsInitialSetup) {
 	runInitialSetupForPlayfield(self);
 	needsInitialSetup = false;
 }
+
+
+// Debug code, remove before release -- DEBUG Micha TODO 
+if (keyboard_check_pressed(vk_space)) {
+	createNewBalloonInPlayfieldAtCellXY(self, [2,3]);
+}

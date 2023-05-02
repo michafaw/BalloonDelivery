@@ -30,6 +30,7 @@ function runInitialSetupForPlayfield(playfieldInst) {
 		var originY = playfieldInst.origin[1] + cellSize[1]*i + playfieldInst.fanOffset[1];
 		var fan = instance_create_layer(originX, originY, "Playfield", objFan);
 		fan.myPlayfield = playfieldInst;
+		fan.myRow = i;
 		fan.myDirection = "right";
 	}
 	// Right Fans
@@ -38,6 +39,7 @@ function runInitialSetupForPlayfield(playfieldInst) {
 		var originY = playfieldInst.origin[1] + cellSize[1]*i + playfieldInst.fanOffset[1];
 		var fan = instance_create_layer(originX, originY, "Playfield", objFan);
 		fan.myPlayfield = playfieldInst;
+		fan.myRow = i;
 		fan.myDirection = "left";
 	}
 	
@@ -46,7 +48,7 @@ function runInitialSetupForPlayfield(playfieldInst) {
 	// Defined layouts
 	//var initialBalloonLayout = [[0,0], [1,0], [2,0], [1,1], [2,1], [4,1], [1,3], [4,2], [4,3], [3,3]];
 	//var initialBalloonLayout = [[2,1], [1,2], [2,2], [3,2], [0,3], [1,3], [2,3], [3,3], [4,3], ]; // Pyramid
-	var initialBalloonLayout = [[2,2],[2,3],];
+	var initialBalloonLayout = [[2,2],[2,3],[1,0],[3,0],];
 	//var initialBalloonLayout = [[2,3],[3,3],];
 	
 	
@@ -86,20 +88,20 @@ function canBalloonMoveUp(balloonInst) {
 		
 	// Find a balloon in the cell above, above+left, above+right
 	with (objBalloon) {
-		if (myPlayfield == other.myPlayfield && self != other) {
-			if (myPosition[0] == other.myPosition[0] && myPosition[1] == other.myPosition[1]-1) {
+		if (myPlayfield == balloonInst.myPlayfield && self != balloonInst) {
+			if (myPosition[0] == balloonInst.myPosition[0] && myPosition[1] == balloonInst.myPosition[1]-1) {
 				// This is the balloon above us
 				if (!isMovingUp) {
 					// It's not moving up, so we're stuck here
 					return false;
 				}
-			} else if (myPosition[0] == other.myPosition[0]-1 && myPosition[1] == other.myPosition[1]-1) {
+			} else if (myPosition[0] == balloonInst.myPosition[0]-1 && myPosition[1] == balloonInst.myPosition[1]-1) {
 				// This is the balloon above us and to the left
 				if (isMovingRight && !isMovingUp) {
 					// It's moving into the spot above us and not moving up, so we're stuck here
 					return false;
 				}
-			} else if (myPosition[0] == other.myPosition[0]+1 && myPosition[1] == other.myPosition[1]-1) {
+			} else if (myPosition[0] == balloonInst.myPosition[0]+1 && myPosition[1] == balloonInst.myPosition[1]-1) {
 				// This is the balloon above us and to the right
 				if (isMovingLeft && !isMovingUp) {
 					// It's moving into the spot above us and not moving up, so we're stuck here
@@ -116,32 +118,68 @@ function canBalloonMoveUp(balloonInst) {
 function canBalloonMoveRight(balloonInst) {
 	if (live_call(argument0)) return live_result;
 	
-	// Balloons already moving up are exempt
-	if (balloonInst.isMovingUp)
-		return false;
+	// Balloons already moving right are exempt
+	//if (balloonInst.isMovingRight)
+	//	return false;
 		
-	// Already at the top
-	if (balloonInst.myPosition[1] == 0)
-		return false;
-		
-	// Find a balloon in the cell above
+	// Count the number of balloons to my right, if it is less than the number of spaces, I can move right
+	var cellsToRight = (balloonInst.myPlayfield.numColumns - 1) - balloonInst.myPosition[0];
+	
+	// We're already at the right edge
+	if (cellsToRight <= 0) {
+		return false;	
+	}
+	
+	var balloonCountToRight = 0;
+	// Find a balloon in the csame row
 	with (objBalloon) {
-		if (myPlayfield == other.myPlayfield) {
-			if (myPosition[0] == other.myPosition[0] && myPosition[1] == other.myPosition[1]-1) {
-				// This is the balloon right above us
-				if (isMovingUp) {
-					// It's moving up, so we can take its spot
-					return true;
-				} else {
-					// It's not moving up, so we're stuck here
-					return false;
+		if (myPlayfield == balloonInst.myPlayfield && self != balloonInst) {
+			if (myPosition[1] == balloonInst.myPosition[1]) { // Same row
+				if (myPosition[0] > balloonInst.myPosition[0]) { // Cell to right
+					balloonCountToRight++;	
 				}
 			}
 		}
 	}
 	
-	// No balloon was found in the space above us, so we're free to move
-	return true;
+	if (balloonCountToRight < cellsToRight) {
+		return true;
+	}
+	
+	return false;
+}
+
+function canBalloonMoveLeft(balloonInst) {
+	if (live_call(argument0)) return live_result;
+	
+	// Balloons already moving left are exempt
+	//if (balloonInst.isMovingLeft)
+	//	return false;
+		
+	// Count the number of balloons to my left, if it is less than the number of spaces, I can move left
+	var cellsToLeft = balloonInst.myPosition[0];
+	
+	// We're already at the left edge
+	if (cellsToLeft <= 0) {
+		return false;	
+	}
+	
+	var balloonCountToLeft = 0;
+	// Find a balloon in the same row
+	with (objBalloon) {
+		if (myPlayfield == balloonInst.myPlayfield && self != balloonInst) {
+			if (myPosition[1] == balloonInst.myPosition[1]) { // Same row
+				if (myPosition[0] < balloonInst.myPosition[0]) { // Column to the left
+					balloonCountToLeft++;	
+				}
+			}
+		}
+	}
+	
+	if (balloonCountToLeft < cellsToLeft) {
+		return true;
+	}
+	return false;
 }
 
 function alignBalloonInCurrentPosition(balloonInst) {
@@ -152,3 +190,38 @@ function alignBalloonInCurrentPosition(balloonInst) {
 	balloonInst.y = originXY[1];
 }
 	
+function moveBalloonsInRowToRight(playfieldInst, row) {
+	if (live_call(argument0, argument1)) return live_result;
+	var moveableBalloons = [];
+	with (objBalloon) {
+		if (myPlayfield == playfieldInst) {
+			if (myPosition[1] == row) {
+				if (canBalloonMoveRight(self)) {
+					array_push(moveableBalloons, self);
+				}
+			}
+		}
+	}
+	
+	for (var i = 0; i < array_length(moveableBalloons); i++) {
+		moveableBalloons[i].shouldTryToAdjustPositionBy++;
+	}
+}
+
+function moveBalloonsInRowToLeft(playfieldInst, row) {
+	if (live_call(argument0, argument1)) return live_result;
+	var moveableBalloons = [];
+	with (objBalloon) {
+		if (myPlayfield == playfieldInst) {
+			if (myPosition[1] == row) {
+				if (canBalloonMoveLeft(self)) {
+					array_push(moveableBalloons, self);
+				}
+			}
+		}
+	}
+	
+	for (var i = 0; i < array_length(moveableBalloons); i++) {
+		moveableBalloons[i].shouldTryToAdjustPositionBy--;
+	}
+}
