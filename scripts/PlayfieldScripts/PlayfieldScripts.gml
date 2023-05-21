@@ -50,6 +50,7 @@ function runInitialSetupForPlayfield(playfieldInst) {
 	//var initialBalloonLayout = [[2,1], [1,2], [2,2], [3,2], [0,3], [1,3], [2,3], [3,3], [4,3], ]; // Pyramid
 	var initialBalloonLayout = [[2,2],[2,3],[1,0],[3,0],];
 	//var initialBalloonLayout = [[2,3],[3,3],];
+	//var initialBalloonLayout = [[2,3],];
 	
 	
 	for (var i = 0; i < array_length(initialBalloonLayout); i++) {

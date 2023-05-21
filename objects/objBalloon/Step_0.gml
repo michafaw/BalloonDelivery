@@ -14,6 +14,18 @@ if (keyboard_check_pressed(vk_right)) {
 	}
 }
 
+// Totally Debug Code for teleporting a balloon down one row, not setup for live use
+//if (keyboard_check_pressed(vk_down) && showDebugMessages) {
+//	if(showDebugMessages) MFLog(string(self.id) + "isMovingDown"); // DEBUG Micha TODO	
+	
+//	// Teleport the balloon to the new location instantly
+//	var balloonInst = self;
+//	destinationPosition = [myPosition[0], myPosition[1]+1];
+//	myPosition = destinationPosition;
+//	var originXY = cellOriginXY(balloonInst.myPlayfield, balloonInst.myPosition);
+//	balloonInst.y = originXY[1];
+//}
+
 
 if (!isMovingLeft && !isMovingRight) {
 	if (shouldTryToAdjustPositionBy > 0) {
@@ -36,6 +48,8 @@ if (!isMovingLeft && !isMovingRight) {
 
 
 if (isMovingRight) {
+	if(showDebugMessages) MFLog(string(self.id) + "isMovingRight"); // DEBUG Micha TODO
+	 
 	if (destinationPosition == noone) {
 		// We've halted movement somewhere else so bail out here
 		isMovingRight = false;
@@ -61,6 +75,8 @@ if (isMovingRight) {
 }
 
 if (isMovingLeft) {
+	if(showDebugMessages) MFLog(string(self.id) + "isMovingLeft"); // DEBUG Micha TODO
+	
 	if (destinationPosition == noone) {
 		// We've halted movement somewhere else so bail out here
 		isMovingLeft = false;
@@ -98,6 +114,8 @@ if (!isMovingUp && liftEnabled) {
 }
 
 if (isMovingUp) {
+	if(showDebugMessages) MFLog(string(self.id) + "isMovingUp"); // DEBUG Micha TODO
+	
 	if (destinationPosition == noone) {
 		// We've halted movement somewhere else so bail out here
 		isMovingUp = false;
